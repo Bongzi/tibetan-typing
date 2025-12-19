@@ -366,17 +366,34 @@
     ];
 
     // --- 3. GENERATORS (གནད་དོན་བཟོ་མཁན།) ---
-    function getKeysForString(str) {
+    // --- 3. GENERATORS (གནད་དོན་བཟོ་མཁན།) ---
+
+    // གསར་དུ་བཟོས་པའི་རྟེན་འབྱུང་། (Helper function)
+    // འདིས་ཡིག་འབྲུ་ (t), མཐེབ་གནས་ (s), དང་ཡི་གེ་གང་ལ་ཁེལ་བའི་ཐོ་ (m) གསུམ་ཆབས་ཅིག་ཏུ་བཟོ།
+    function generateDrillObject(textStr) {
         let keys = [];
-        for (let i = 0; i < str.length; i++) {
-            let char = str[i];
+        let mapping = []; // མཐེབ་གནས་རེ་རེ་ཡི་གེ་གང་ལ་ཁེལ་གྱི་ཡོད་མེད་སྟོན་པའི་ཐོ།
+        
+        for (let i = 0; i < textStr.length; i++) {
+            let char = textStr[i];
+            let charKeys = [];
+            
             if (charToKeys[char]) {
-                keys.push(...charToKeys[char]);
+                charKeys = charToKeys[char];
             } else if (char === ' ') {
-                keys.push('Space');
+                charKeys = ['Space'];
+            }
+            
+            // ཡིག་འབྲུ་དེ་མེད་ན (དཔེར་ན་ newline) མཐེབ་གནས་སྟོང་པ་འཇུག
+            if (charKeys.length > 0) {
+                keys.push(...charKeys);
+                // མཐེབ་གནས་ག་ཚོད་ཡོད་ནའང་། ཚང་མ་ཡིག་འབྲུ་དེའི་ཨང་ (i) དང་སྦྲེལ།
+                for(let k=0; k<charKeys.length; k++) {
+                    mapping.push(i);
+                }
             }
         }
-        return keys;
+        return { t: textStr, s: keys, m: mapping };
     }
 
     function generateBeginnerDrills() {
@@ -389,14 +406,11 @@
             "ཀོ་ཁོ་གོ་ངོ་།", "ཅོ་ཆོ་ཇོ་ཉོ།", "ཏོ་ཐོ་དོ་ནོ།", "པོ་ཕོ་བོ་མོ།", "ཙོ་ཚོ་ཛོ་ཝོ།", "ཞོ་ཟོ་འོ་ཡོ།", "རོ་ལོ་ཤོ་སོ།", "ཧོ་ཨོ།"
         ];
         
-        return rawLines.map(line => ({
-            t: line,
-            s: getKeysForString(line)
-        }));
+        // ཐད་ཀར་ function གསར་པ་དེ་བེད་སྤྱོད་གཏོང་བ།
+        return rawLines.map(line => generateDrillObject(line));
     }
 
     function generateIntermediateDrills() {
-        // Ensure data is present
         if (!intermediateWordsRaw) return [];
         
         const words = intermediateWordsRaw.split(/[\s,།]+/).filter(w => w.trim() !== "");
@@ -404,14 +418,17 @@
             const j = Math.floor(Math.random() * (i + 1));
             [words[i], words[j]] = [words[j], words[i]];
         }
+        
         const drills = [];
         words.forEach(word => {
             let text = word;
-            let keys = getKeysForString(word);
+            // མཇུག་ཏུ་ཤད་སྦྱོར་བ།
             let lastChar = word.slice(-1);
-            if (lastChar === 'ང') { text += "་།"; keys.push('j', '\''); }
-            else { text += "།"; keys.push('\''); }
-            drills.push({t: text, s: keys});
+            if (lastChar === 'ང') { text += "་།"; }
+            else { text += "།"; }
+            
+            // འདིར་ཡང་ generateDrillObject བེད་སྤྱོད་གཏོང་དགོས།
+            drills.push(generateDrillObject(text));
         });
         return drills;
     }
@@ -428,11 +445,12 @@
         texts.forEach(text => {
             const cleanText = text.trim();
             if(cleanText) {
-                drills.push({t: cleanText, s: getKeysForString(cleanText)});
+                drills.push(generateDrillObject(cleanText));
             }
         });
         return drills;
     }
+            
 
     // --- 4. APP LOGIC (ལས་རིམ་གྱི་འགྲོ་སྟངས།) ---
     let currentLevelData = [];
@@ -588,23 +606,38 @@
         }
         instruction.innerText = msg;
 
-        const ratio = currentKeyIdx / activeDrill.s.length;
-        const limit = Math.floor(ratio * activeDrill.t.length);
+        // --- བཟོ་བཅོས་བྱས་པའི་ཆ་ཤས། ---
+        // Mapping (m) བེད་སྤྱོད་བྱས་ནས་ཡི་གེ་གང་ལ་སླེབས་ཡོད་མེད་ཐག་གཅོད་པ།
         
+        let currentCharacterIndex = 0;
+        
+        // གལ་སྲིད་ང་ཚོ་ད་ལྟ་ཡི་གེ་འབྲི་བཞིན་པའི་སྒང་ཡིན་ན། 
+        if (currentKeyIdx < activeDrill.s.length) {
+            // activeDrill.m ནང་དུ་ད་ལྟའི་མཐེབ་གནས་དེ་ཡིག་འབྲུ་ཨང་ག་ཚོད་པ་ཡིན་མེད་བྲིས་ཡོད།
+            currentCharacterIndex = activeDrill.m[currentKeyIdx];
+        } else {
+            // ཚར་བ་ཡིན་ན་ཚང་མ་སྔོན་པོ་བཟོ།
+            currentCharacterIndex = activeDrill.t.length;
+        }
+
         for(let i=0; i<activeDrill.t.length; i++){
             const el = document.getElementById(`char-${i}`);
             if(!el) continue;
             
-            if(i < limit) el.className = 'char active';
-            else if (i === limit) {
-                el.className = 'char current-cursor';
+            if(i < currentCharacterIndex) {
+                el.className = 'char active'; // བྲིས་ཚར་བ།
+            }
+            else if (i === currentCharacterIndex) {
+                el.className = 'char current-cursor'; // ད་ལྟ་འབྲི་བཞིན་པ།
+                
+                // Scroll རང་འགུལ་གྱིས་སྒྲིག་པ།
                 const box = document.querySelector('.target-box');
                 const offset = el.offsetTop - box.offsetTop;
                 if (offset > 120) { 
                     box.scrollTop = offset - 60; 
                 }
             } else {
-                el.className = 'char';
+                el.className = 'char'; // འབྲི་རྒྱུ་ལྷག་མ།
             }
         }
 

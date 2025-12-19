@@ -2,13 +2,21 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>བོད་ཡིག་གི་མཐེབ་གཞོང་སྦྱོང་བརྡར། (V10 Fixed)</title>
+    <title>བོད་ཡིག་གི་མཐེབ་གཞོང་སྦྱོང་བརྡར། (Final Fixed)</title>
     <style>
+        /* --- 1. ཡིག་གཟུགས་འཇུག་པ། --- */
+        @font-face {
+            font-family: 'MyCustomTibetan';
+            /* ཁྱེད་ཀྱི་ཡིག་གཟུགས་ཀྱི་མིང་འདིར་འབྲི་དགོས། */
+            src: url('tibetan.ttf') format('truetype'); 
+            font-weight: normal;
+            font-style: normal;
+        }
+
         :root {
-            /* 保持原有的变量设置，只改背景逻辑 */
             --text-color: #334155;
             --card-bg: rgba(255, 255, 255, 0.95);
-            --accent: #0ea5e9; /* Cyan Blue */
+            --accent: #0ea5e9;
             --success: #22c55e;
             --error: #ef4444;
             --key-bg: #ffffff;
@@ -17,13 +25,9 @@
             --finger-active: rgba(14, 165, 233, 0.9);
         }
 
-        /* --- ★★★ 夜间模式背景设置 (修改处) ★★★ --- */
         body.dark-mode {
-            /* 1. 设置晚上图片，使用 !important 强制覆盖白天设置 */
             background: url('night.jpg') no-repeat center center fixed !important;
             background-size: cover !important;
-
-            /* 保持原有的夜间配色变量 */
             --text-color: #f8fafc;
             --card-bg: rgba(15, 23, 42, 0.95);
             --key-bg: #1e293b;
@@ -32,10 +36,10 @@
         }
 
         body {
-            font-family: "Microsoft Himalaya", "Monlam Uni", sans-serif;
+            /* རང་གིས་བཅུག་པའི་ཡིག་གཟུགས་དང་པོར་བཞག་ཡོད། */
+            font-family: 'MyCustomTibetan', "Microsoft Himalaya", "Monlam Uni", sans-serif;
+            text-rendering: optimizeLegibility;
             
-            /* --- ★★★ 白天模式背景设置 (修改处) ★★★ --- */
-            /* 1. 设置白天图片 */
             background: url('day.jpg') no-repeat center center fixed;
             background-size: cover;
 
@@ -53,19 +57,15 @@
         /* --- MENU SCREEN --- */
         #menu-screen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            /* 移除原本的渐变背景，改为透明以便显示底图，或者保持半透明模糊 */
             background: rgba(255, 255, 255, 0.1); 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center; z-index: 100;
             backdrop-filter: blur(10px);
         }
         
-        /* 修复夜间模式下的菜单遮罩颜色，防止太亮 */
-        body.dark-mode #menu-screen {
-            background: rgba(0, 0, 0, 0.3);
-        }
+        body.dark-mode #menu-screen { background: rgba(0, 0, 0, 0.3); }
 
-        h1 { margin-bottom: 30px; font-size: 56px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { margin-bottom: 30px; font-size: 64px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
         .level-container { display: flex; gap: 40px; margin-top: 20px; }
         .level-card {
@@ -76,8 +76,8 @@
             display: flex; flex-direction: column; justify-content: center;
         }
         .level-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 40px rgba(14, 165, 233, 0.2); }
-        .level-card h2 { color: var(--accent); margin: 0 0 10px 0; font-size: 36px; }
-        .level-card p { opacity: 0.8; font-size: 20px; line-height: 1.4; margin: 0; }
+        .level-card h2 { color: var(--accent); margin: 0 0 10px 0; font-size: 40px; }
+        .level-card p { opacity: 0.8; font-size: 24px; line-height: 1.4; margin: 0; }
 
         /* --- GAME SCREEN --- */
         #game-screen {
@@ -108,28 +108,45 @@
             scroll-behavior: smooth;
         }
         
-        /* Custom Scrollbar */
         .target-box::-webkit-scrollbar { width: 10px; }
         .target-box::-webkit-scrollbar-track { background: transparent; }
         .target-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
 
         #target-text-container {
-            font-size: 48px; line-height: 1.8; 
+            font-size: 56px; 
+            line-height: 1.8; 
             text-align: center; 
             width: 100%;
             white-space: pre-wrap; word-break: keep-all;
         }
         
-        .char { color: #94a3b8; transition: color 0.1s; } 
+        /* --- ཡི་གེའི་འགུལ་རིས་བཟོ་བཅོས། --- */
+        .char { 
+            color: #94a3b8; 
+            transition: color 0.2s, transform 0.2s; /* འགུལ་སྐྱོད་འཇམ་པོ། */
+            display: inline-block;
+        } 
+        
         .char.active { color: var(--text-color); } 
         
+        /* ད་ལྟ་འབྲི་བཞིན་པའི་ཡི་གེ་ (འགུལ་བ) */
         .char.current-cursor { 
             color: var(--accent); 
             font-weight: bold;
-            text-decoration: underline;
-            text-decoration-thickness: 3px;
+            transform: translateY(-6px) scale(1.1); /* ཡར་འགུལ་བ་དང་ཆེ་རུ་གཏོང་བ། */
+            text-shadow: 0 4px 8px rgba(14, 165, 233, 0.3);
         }
-        .char.error { color: var(--error); text-decoration: underline wavy var(--error); }
+
+        .char.error { 
+            color: var(--error); 
+            animation: shake 0.3s; 
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
 
         /* 2. STATS BAR */
         #stats-bar {
@@ -143,7 +160,7 @@
             margin-bottom: 10px; z-index: 60;
             box-sizing: border-box;
         }
-        .stat-group { display: flex; gap: 20px; align-items: center; font-size: 18px; color: #666; }
+        .stat-group { display: flex; gap: 20px; align-items: center; font-size: 20px; color: #666; }
         .stat-val { font-weight: bold; color: var(--accent); margin-left: 5px; }
         
         .progress-controls { display: flex; align-items: center; gap: 10px; flex-grow: 1; justify-content: center; margin: 0 20px; }
@@ -151,7 +168,7 @@
         input[type=number] { width: 50px; padding: 3px; border-radius: 5px; border: 1px solid #ccc; text-align: center; font-size: 14px; }
 
         .btn-pause {
-            padding: 5px 15px; font-size: 16px; border-radius: 6px; border: 1px solid var(--accent);
+            padding: 5px 15px; font-size: 18px; border-radius: 6px; border: 1px solid var(--accent);
             background: transparent; color: var(--accent); cursor: pointer; transition: 0.2s;
         }
         .btn-pause:hover { background: var(--accent); color: white; }
@@ -179,7 +196,7 @@
         .key.active .tib, .key.active .eng { color: #0f172a !important; opacity: 1; }
         .key.special { width: 100px; font-size: 14px; }
         .key.space { width: 400px; }
-        .key .tib { font-size: 28px; font-weight: bold; z-index: 2; }
+        .key .tib { font-size: 30px; font-weight: bold; z-index: 2; line-height: 1; margin-top: 5px; }
         .key .eng { position: absolute; top: 4px; left: 6px; font-size: 12px; opacity: 0.6; font-family: sans-serif; }
 
         .hands-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30; }
@@ -197,11 +214,11 @@
             background: white; padding: 50px; border-radius: 30px; text-align: center;
             max-width: 600px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: popIn 0.5s ease;
         }
-        .modal-poem { font-size: 32px; line-height: 1.6; margin-bottom: 30px; color: #333; font-weight: bold; }
+        .modal-poem { font-size: 36px; line-height: 1.6; margin-bottom: 30px; color: #333; font-weight: bold; }
         .btn-finish { padding: 15px 40px; font-size: 24px; background: var(--accent); color: white; border: none; border-radius: 50px; cursor: pointer; }
         @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         button { padding: 10px 20px; cursor: pointer; border-radius: 8px; border: 1px solid #ccc; background: rgba(255,255,255,0.5); color: var(--text-color); font-size: 18px; }
-        .instruction { font-size: 22px; color: var(--accent); margin-bottom: 5px; height: 30px; text-align:center; width:100%; font-weight: bold; }
+        .instruction { font-size: 24px; color: var(--accent); margin-bottom: 5px; height: 35px; text-align:center; width:100%; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -365,7 +382,6 @@
         `འཇིག་རྟེན་འདིའི་བྱ་བ་ཐམས་ཅད་ནི་བསྒྲུབས་ནས་འགྲུབ་རྒྱུ་མེད་པ། མཐའ་མེད་པའི་ལས་ཀྱི་འཁོར་ལོ་ཞིག་ཡིན་པར་མཐོང་སྟེ། རང་རེ་རྣམས་ཀྱིས་ཚེ་འདི་ལ་དོན་མེད་ཀྱི་ངལ་བ་ཁོ་ནས་དུས་འདའ་བར་བྱེད་པ་ནི་ཤིན་ཏུ་ཕངས་པའི་གནས་སུ་མཐོང་ངོ་།`
     ];
 
-    // --- 3. GENERATORS (གནད་དོན་བཟོ་མཁན།) ---
     // --- 3. GENERATORS (གནད་དོན་བཟོ་མཁན།) ---
 
     // གསར་དུ་བཟོས་པའི་རྟེན་འབྱུང་། (Helper function)
@@ -571,23 +587,53 @@
         updateUI();
     }
 
+    // --- ★★★ གསར་དུ་བཟོས་པའི་ LoadDrill (Stacking Logic) ★★★ ---
+    function isTibetanCombiner(char) {
+        if (!char) return false;
+        const code = char.charCodeAt(0);
+        // 0F71-0F84 (Vowels), 0F90-0FBC (Subjoined), 0FC6
+        return (code >= 0x0F71 && code <= 0x0F84) || 
+               (code >= 0x0F90 && code <= 0x0FBC) ||
+               (code === 0x0FC6);
+    }
+
+    let charIndexToSpanId = []; 
+
     function loadDrill() {
         if (!currentLevelData || !currentLevelData[currentDrillIdx]) return;
         
         activeDrill = currentLevelData[currentDrillIdx];
         currentKeyIdx = 0;
         targetContainer.innerHTML = '';
-        const chars = activeDrill.t.split('');
-        chars.forEach((c, i) => {
-            const s = document.createElement('span');
-            s.innerText = c;
-            s.className = 'char';
-            s.id = `char-${i}`;
-            targetContainer.appendChild(s);
-        });
+        charIndexToSpanId = [];
+
+        const text = activeDrill.t;
+        let currentSpanIdx = 0;
+        
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            
+            // གལ་སྲིད་འདོགས་ཅན་ཡིན་ན་སྔོན་མའི་ནང་དུ་སྡུད་པ།
+            if (i > 0 && isTibetanCombiner(char)) {
+                const lastSpan = document.getElementById(`span-${currentSpanIdx - 1}`);
+                if (lastSpan) {
+                    lastSpan.innerText += char; 
+                    charIndexToSpanId[i] = currentSpanIdx - 1; 
+                }
+            } else {
+                // གསར་པ་བཟོ་བ།
+                const s = document.createElement('span');
+                s.innerText = char;
+                s.className = 'char';
+                s.id = `span-${currentSpanIdx}`;
+                targetContainer.appendChild(s);
+                
+                charIndexToSpanId[i] = currentSpanIdx;
+                currentSpanIdx++;
+            }
+        }
         
         document.querySelector('.target-box').scrollTop = 0;
-        
         updateUI();
     }
 
@@ -596,48 +642,47 @@
         
         const targetKey = activeDrill.s[currentKeyIdx];
         
-        let msg = "Type to start";
+        let msg = "འགོ་རྩོམས་དང་།";
         if (isSessionActive) {
-            if (isPaused) msg = "Paused";
-            else if (targetKey === 'Shift') msg = "Hold Shift";
-            else if (targetKey === 'm') msg = "Press M (Stack)";
-            else if (targetKey === 'Space') msg = "Press Space";
-            else msg = "Type the highlighted key";
+            if (isPaused) msg = "མཚམས་འཇོག";
+            else if (targetKey === 'Shift') msg = "Shift མནན།";
+            else if (targetKey === 'm') msg = "M མནན། (བརྩེགས་མ།)";
+            else if (targetKey === 'Space') msg = "བར་སྟོང་མནན།";
+            else msg = "མཐེབ་གནས་གནོན།";
         }
         instruction.innerText = msg;
 
-        // --- བཟོ་བཅོས་བྱས་པའི་ཆ་ཤས། ---
-        // Mapping (m) བེད་སྤྱོད་བྱས་ནས་ཡི་གེ་གང་ལ་སླེབས་ཡོད་མེད་ཐག་གཅོད་པ།
-        
+        // --- འགུལ་རིས་དོན་དུ་ Span གང་ཡིན་འཚོལ་བ། ---
         let currentCharacterIndex = 0;
-        
-        // གལ་སྲིད་ང་ཚོ་ད་ལྟ་ཡི་གེ་འབྲི་བཞིན་པའི་སྒང་ཡིན་ན། 
         if (currentKeyIdx < activeDrill.s.length) {
-            // activeDrill.m ནང་དུ་ད་ལྟའི་མཐེབ་གནས་དེ་ཡིག་འབྲུ་ཨང་ག་ཚོད་པ་ཡིན་མེད་བྲིས་ཡོད།
             currentCharacterIndex = activeDrill.m[currentKeyIdx];
         } else {
-            // ཚར་བ་ཡིན་ན་ཚང་མ་སྔོན་པོ་བཟོ།
             currentCharacterIndex = activeDrill.t.length;
         }
 
-        for(let i=0; i<activeDrill.t.length; i++){
-            const el = document.getElementById(`char-${i}`);
+        let activeSpanId = -1;
+        if (currentCharacterIndex < activeDrill.t.length) {
+            activeSpanId = charIndexToSpanId[currentCharacterIndex];
+        }
+
+        let totalSpans = document.getElementById('target-text-container').children.length;
+
+        for(let i=0; i<totalSpans; i++){
+            const el = document.getElementById(`span-${i}`);
             if(!el) continue;
-            
-            if(i < currentCharacterIndex) {
-                el.className = 'char active'; // བྲིས་ཚར་བ།
-            }
-            else if (i === currentCharacterIndex) {
-                el.className = 'char current-cursor'; // ད་ལྟ་འབྲི་བཞིན་པ།
+
+            if (i < activeSpanId || (activeSpanId === -1 && currentCharacterIndex >= activeDrill.t.length)) {
+                // བྲིས་ཚར་བ།
+                el.className = 'char active';
+            } else if (i === activeSpanId) {
+                // ད་ལྟ་འབྲི་བཞིན་པ། (འགུལ་རིས།)
+                el.className = 'char current-cursor';
                 
-                // Scroll རང་འགུལ་གྱིས་སྒྲིག་པ།
                 const box = document.querySelector('.target-box');
                 const offset = el.offsetTop - box.offsetTop;
-                if (offset > 120) { 
-                    box.scrollTop = offset - 60; 
-                }
+                if (offset > 120) { box.scrollTop = offset - 60; }
             } else {
-                el.className = 'char'; // འབྲི་རྒྱུ་ལྷག་མ།
+                el.className = 'char';
             }
         }
 
@@ -757,10 +802,14 @@
                 updateUI();
             }
         } else {
-            if (activeDrill && activeDrill.t) {
-                const ratio = currentKeyIdx / activeDrill.s.length;
-                const idx = Math.floor(ratio * activeDrill.t.length);
-                const el = document.getElementById(`char-${idx}`);
+            // Error handling needs mapped span
+            if (activeDrill) {
+                let charIdx = 0;
+                if(currentKeyIdx < activeDrill.s.length) charIdx = activeDrill.m[currentKeyIdx];
+                else charIdx = activeDrill.t.length -1;
+
+                let spanId = charIndexToSpanId[charIdx];
+                const el = document.getElementById(`span-${spanId}`);
                 if(el) { el.classList.add('error'); setTimeout(()=>el.classList.remove('error'), 200); }
             }
             elAcc.innerText = Math.round((correctKeysTyped/totalKeysTyped)*100) + "%";

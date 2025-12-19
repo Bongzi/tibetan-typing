@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>བོད་ཡིག་གི་མཐེབ་གཞོང་སྦྱོང་བརྡར། (Final Fixed)</title>
+    <title>བོད་ཡིག་གི་མཐེབ་གཞོང་སྦྱོང་བརྡར། (Final Perfect)</title>
     <style>
         /* --- 1. ཡིག་གཟུགས་འཇུག་པ། --- */
         @font-face {
             font-family: 'MyCustomTibetan';
-            /* ཁྱེད་ཀྱི་ཡིག་གཟུགས་ཀྱི་མིང་འདིར་འབྲི་དགོས། */
+            /* ཁྱེད་ཀྱི་ཡིག་གཟུགས་ཡིག་ཆའི་མིང་ (tibetan.ttf) འདིར་འབྲི་དགོས། */
             src: url('tibetan.ttf') format('truetype'); 
             font-weight: normal;
             font-style: normal;
@@ -36,7 +36,7 @@
         }
 
         body {
-            /* རང་གིས་བཅུག་པའི་ཡིག་གཟུགས་དང་པོར་བཞག་ཡོད། */
+            /* ཡིག་གཟུགས་གོ་རིམ། */
             font-family: 'MyCustomTibetan', "Microsoft Himalaya", "Monlam Uni", sans-serif;
             text-rendering: optimizeLegibility;
             
@@ -65,7 +65,7 @@
         
         body.dark-mode #menu-screen { background: rgba(0, 0, 0, 0.3); }
 
-        h1 { margin-bottom: 30px; font-size: 64px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { margin-bottom: 30px; font-size: 48px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
         .level-container { display: flex; gap: 40px; margin-top: 20px; }
         .level-card {
@@ -76,8 +76,8 @@
             display: flex; flex-direction: column; justify-content: center;
         }
         .level-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 40px rgba(14, 165, 233, 0.2); }
-        .level-card h2 { color: var(--accent); margin: 0 0 10px 0; font-size: 40px; }
-        .level-card p { opacity: 0.8; font-size: 24px; line-height: 1.4; margin: 0; }
+        .level-card h2 { color: var(--accent); margin: 0 0 10px 0; font-size: 32px; }
+        .level-card p { opacity: 0.8; font-size: 18px; line-height: 1.4; margin: 0; }
 
         /* --- GAME SCREEN --- */
         #game-screen {
@@ -93,7 +93,7 @@
         /* 3. TARGET BOX */
         .target-box {
             width: 90%; max-width: 1000px; 
-            height: 250px; 
+            height: 250px; /* རིམ་པ་དང་པོ་དང་གཉིས་པའི་ཚད་གཞི་འདི་ཡིན། */
             background: var(--card-bg);
             border-radius: 20px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
@@ -106,6 +106,7 @@
             border: 2px solid rgba(0,0,0,0.05);
             z-index: 60; position: relative;
             scroll-behavior: smooth;
+            transition: height 0.3s ease; /* ཆེ་ཆུང་འགྱུར་དུས་འཇམ་པོ། */
         }
         
         .target-box::-webkit-scrollbar { width: 10px; }
@@ -113,7 +114,7 @@
         .target-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
 
         #target-text-container {
-            font-size: 56px; 
+            font-size: 42px; /* ཡིག་གཟུགས་རན་པོ། */
             line-height: 1.8; 
             text-align: center; 
             width: 100%;
@@ -123,7 +124,7 @@
         /* --- ཡི་གེའི་འགུལ་རིས་བཟོ་བཅོས། --- */
         .char { 
             color: #94a3b8; 
-            transition: color 0.2s, transform 0.2s; /* འགུལ་སྐྱོད་འཇམ་པོ། */
+            transition: color 0.2s, transform 0.2s;
             display: inline-block;
         } 
         
@@ -133,7 +134,7 @@
         .char.current-cursor { 
             color: var(--accent); 
             font-weight: bold;
-            transform: translateY(-6px) scale(1.1); /* ཡར་འགུལ་བ་དང་ཆེ་རུ་གཏོང་བ། */
+            transform: translateY(-6px) scale(1.1);
             text-shadow: 0 4px 8px rgba(14, 165, 233, 0.3);
         }
 
@@ -147,6 +148,8 @@
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
+
+        .instruction { font-size: 20px; color: var(--accent); margin-bottom: 5px; height: 35px; text-align:center; width:100%; font-weight: bold; }
 
         /* 2. STATS BAR */
         #stats-bar {
@@ -196,7 +199,7 @@
         .key.active .tib, .key.active .eng { color: #0f172a !important; opacity: 1; }
         .key.special { width: 100px; font-size: 14px; }
         .key.space { width: 400px; }
-        .key .tib { font-size: 30px; font-weight: bold; z-index: 2; line-height: 1; margin-top: 5px; }
+        .key .tib { font-size: 24px; font-weight: bold; z-index: 2; line-height: 1; margin-top: 5px; }
         .key .eng { position: absolute; top: 4px; left: 6px; font-size: 12px; opacity: 0.6; font-family: sans-serif; }
 
         .hands-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30; }
@@ -214,11 +217,11 @@
             background: white; padding: 50px; border-radius: 30px; text-align: center;
             max-width: 600px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: popIn 0.5s ease;
         }
-        .modal-poem { font-size: 36px; line-height: 1.6; margin-bottom: 30px; color: #333; font-weight: bold; }
+        .modal-poem { font-size: 28px; line-height: 1.6; margin-bottom: 30px; color: #333; font-weight: bold; }
         .btn-finish { padding: 15px 40px; font-size: 24px; background: var(--accent); color: white; border: none; border-radius: 50px; cursor: pointer; }
         @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         button { padding: 10px 20px; cursor: pointer; border-radius: 8px; border: 1px solid #ccc; background: rgba(255,255,255,0.5); color: var(--text-color); font-size: 18px; }
-        .instruction { font-size: 24px; color: var(--accent); margin-bottom: 5px; height: 35px; text-align:center; width:100%; font-weight: bold; }
+        
     </style>
 </head>
 <body>
@@ -384,11 +387,9 @@
 
     // --- 3. GENERATORS (གནད་དོན་བཟོ་མཁན།) ---
 
-    // གསར་དུ་བཟོས་པའི་རྟེན་འབྱུང་། (Helper function)
-    // འདིས་ཡིག་འབྲུ་ (t), མཐེབ་གནས་ (s), དང་ཡི་གེ་གང་ལ་ཁེལ་བའི་ཐོ་ (m) གསུམ་ཆབས་ཅིག་ཏུ་བཟོ།
     function generateDrillObject(textStr) {
         let keys = [];
-        let mapping = []; // མཐེབ་གནས་རེ་རེ་ཡི་གེ་གང་ལ་ཁེལ་གྱི་ཡོད་མེད་སྟོན་པའི་ཐོ།
+        let mapping = []; 
         
         for (let i = 0; i < textStr.length; i++) {
             let char = textStr[i];
@@ -400,10 +401,8 @@
                 charKeys = ['Space'];
             }
             
-            // ཡིག་འབྲུ་དེ་མེད་ན (དཔེར་ན་ newline) མཐེབ་གནས་སྟོང་པ་འཇུག
             if (charKeys.length > 0) {
                 keys.push(...charKeys);
-                // མཐེབ་གནས་ག་ཚོད་ཡོད་ནའང་། ཚང་མ་ཡིག་འབྲུ་དེའི་ཨང་ (i) དང་སྦྲེལ།
                 for(let k=0; k<charKeys.length; k++) {
                     mapping.push(i);
                 }
@@ -421,29 +420,22 @@
             "ཀེ་ཁེ་གེ་ངེ་།", "ཅེ་ཆེ་ཇེ་ཉེ།", "ཏེ་ཐེ་དེ་ནེ།", "པེ་ཕེ་བེ་མེ།", "ཙེ་ཚེ་ཛེ་ཝེ།", "ཞེ་ཟེ་འེ་ཡེ།", "རེ་ལེ་ཤེ་སེ།", "ཧེ་ཨེ།",
             "ཀོ་ཁོ་གོ་ངོ་།", "ཅོ་ཆོ་ཇོ་ཉོ།", "ཏོ་ཐོ་དོ་ནོ།", "པོ་ཕོ་བོ་མོ།", "ཙོ་ཚོ་ཛོ་ཝོ།", "ཞོ་ཟོ་འོ་ཡོ།", "རོ་ལོ་ཤོ་སོ།", "ཧོ་ཨོ།"
         ];
-        
-        // ཐད་ཀར་ function གསར་པ་དེ་བེད་སྤྱོད་གཏོང་བ།
         return rawLines.map(line => generateDrillObject(line));
     }
 
     function generateIntermediateDrills() {
         if (!intermediateWordsRaw) return [];
-        
         const words = intermediateWordsRaw.split(/[\s,།]+/).filter(w => w.trim() !== "");
         for (let i = words.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [words[i], words[j]] = [words[j], words[i]];
         }
-        
         const drills = [];
         words.forEach(word => {
             let text = word;
-            // མཇུག་ཏུ་ཤད་སྦྱོར་བ།
             let lastChar = word.slice(-1);
             if (lastChar === 'ང') { text += "་།"; }
             else { text += "།"; }
-            
-            // འདིར་ཡང་ generateDrillObject བེད་སྤྱོད་གཏོང་དགོས།
             drills.push(generateDrillObject(text));
         });
         return drills;
@@ -451,7 +443,6 @@
 
     function generateAdvancedDrills() {
         if (!advancedTextsRaw) return [];
-        
         const drills = [];
         let texts = [...advancedTextsRaw];
         for (let i = texts.length - 1; i > 0; i--) {
@@ -466,7 +457,6 @@
         });
         return drills;
     }
-            
 
     // --- 4. APP LOGIC (ལས་རིམ་གྱི་འགྲོ་སྟངས།) ---
     let currentLevelData = [];
@@ -478,7 +468,6 @@
     let totalKeysTyped = 0;
     let correctKeysTyped = 0;
     
-    // Timer State
     let isSessionActive = false; 
     let isPaused = false; 
 
@@ -497,6 +486,7 @@
     const btnPause = document.getElementById('btn-pause');
     const btnRestart = document.getElementById('btn-restart');
 
+    // ★★★ འདིར་བཟོ་བཅོས་ཆེན་པོ་བྱས་ཡོད། ★★★
     function initLevel(level) {
         if(level === 1) currentLevelData = generateBeginnerDrills();
         else if(level === 2) currentLevelData = generateIntermediateDrills();
@@ -510,6 +500,20 @@
         menuScreen.style.display = 'none';
         gameScreen.style.display = 'flex';
         
+        // --- བྱང་ཆ་ལྡན་པའི་ (L3) དམིགས་བསལ་བཀོད་སྒྲིག ---
+        const kbWrapper = document.querySelector('.keyboard-wrapper');
+        const targetBox = document.querySelector('.target-box');
+
+        if (level === 3) {
+            // བྱང་ཆ་ལྡན་པ།: མཐེབ་གཞོང་སྦས་པ། འཆར་ཁུང་ཆེན་པོ་བཟོ་བ།
+            kbWrapper.style.display = 'none';
+            targetBox.style.height = '70vh'; // ཧ་ཅང་ཆེན་པོ།
+        } else {
+            // གཞན་དག་ལ།: མཐེབ་གཞོང་སྟོན་པ། འཆར་ཁུང་སྔར་རྒྱུན་བཞིན།
+            kbWrapper.style.display = 'block';
+            targetBox.style.height = '250px';
+        }
+
         elSlider.max = currentLevelData.length;
         elProgNum.max = currentLevelData.length;
         elTotalDrills.innerText = "/ " + currentLevelData.length;
@@ -587,11 +591,9 @@
         updateUI();
     }
 
-    // --- ★★★ གསར་དུ་བཟོས་པའི་ LoadDrill (Stacking Logic) ★★★ ---
     function isTibetanCombiner(char) {
         if (!char) return false;
         const code = char.charCodeAt(0);
-        // 0F71-0F84 (Vowels), 0F90-0FBC (Subjoined), 0FC6
         return (code >= 0x0F71 && code <= 0x0F84) || 
                (code >= 0x0F90 && code <= 0x0FBC) ||
                (code === 0x0FC6);
@@ -613,7 +615,6 @@
         for (let i = 0; i < text.length; i++) {
             const char = text[i];
             
-            // གལ་སྲིད་འདོགས་ཅན་ཡིན་ན་སྔོན་མའི་ནང་དུ་སྡུད་པ།
             if (i > 0 && isTibetanCombiner(char)) {
                 const lastSpan = document.getElementById(`span-${currentSpanIdx - 1}`);
                 if (lastSpan) {
@@ -621,7 +622,6 @@
                     charIndexToSpanId[i] = currentSpanIdx - 1; 
                 }
             } else {
-                // གསར་པ་བཟོ་བ།
                 const s = document.createElement('span');
                 s.innerText = char;
                 s.className = 'char';
@@ -652,7 +652,6 @@
         }
         instruction.innerText = msg;
 
-        // --- འགུལ་རིས་དོན་དུ་ Span གང་ཡིན་འཚོལ་བ། ---
         let currentCharacterIndex = 0;
         if (currentKeyIdx < activeDrill.s.length) {
             currentCharacterIndex = activeDrill.m[currentKeyIdx];
@@ -672,12 +671,9 @@
             if(!el) continue;
 
             if (i < activeSpanId || (activeSpanId === -1 && currentCharacterIndex >= activeDrill.t.length)) {
-                // བྲིས་ཚར་བ།
                 el.className = 'char active';
             } else if (i === activeSpanId) {
-                // ད་ལྟ་འབྲི་བཞིན་པ། (འགུལ་རིས།)
                 el.className = 'char current-cursor';
-                
                 const box = document.querySelector('.target-box');
                 const offset = el.offsetTop - box.offsetTop;
                 if (offset > 120) { box.scrollTop = offset - 60; }
@@ -802,7 +798,6 @@
                 updateUI();
             }
         } else {
-            // Error handling needs mapped span
             if (activeDrill) {
                 let charIdx = 0;
                 if(currentKeyIdx < activeDrill.s.length) charIdx = activeDrill.m[currentKeyIdx];

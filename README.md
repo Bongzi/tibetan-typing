@@ -66,13 +66,13 @@ keyboard layout, improving both speed and accuracy through interactive practice.
 
 📝 བསམ་འཆར་ཡར་ཞུ། | 意见反馈 | Feedback
 
-བོད་ཡིག: གལ་ཏེ་ཡིག་ནོར་དང་སྐྱོན་ཆ་གང་ཡོད་རྣམས་ "བསམ་འཆར་ཡར་ཞུ"
-ཞེས་པའི་སྐར་ཁུང་བརྒྱུད་ནས་གཏོང་རོགས་ཞུ། 中文:
-如果您在练习过程中发现错别字或程序错误，请通过侧边栏的“反馈”窗口告知。 English: If you encounter any typos or
+གལ་ཏེ་ཡིག་ནོར་དང་སྐྱོན་ཆ་གང་ཡོད་རྣམས་ "བསམ་འཆར་ཡར་ཞུ"
+ཞེས་པའི་སྐར་ཁུང་བརྒྱུད་ནས་གཏོང་རོགས་ཞུ། 
+如果您在练习过程中发现错别字或程序错误，请通过侧边栏的“反馈”窗口告知。 If you encounter any typos or
 bugs, please let us know via the integrated feedback panel.
 
 🤝 རྩོམ་བདག་དབང་ཆ། | 版权声明 | Credits & License
 
-  - Developed by: [ཁྱེད་ཀྱི་མིང་འདིར་འབྲི། / 您的名字 / Your Name]
+  - Developed by: [རིན་ཆེན། / 仁青 / rinchen]
   - Font support: Tibetan standard fonts (Microsoft Himalaya, Monlam Uni, etc.)
   - Backgrounds: Custom Day/Night landscape wallpapers.

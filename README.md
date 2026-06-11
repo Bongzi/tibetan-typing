@@ -1,8 +1,3 @@
-འདི་ནི་ཁྱེད་ཀྱི་ GitHub Repository
-ལ་ཆེད་དུ་དམིགས་ནས་བྲིས་པའི་སྐད་གསུམ་ཤན་སྦྱར་གྱི་
-README.md ནང་དོན་ཡིན།
-འདིས་ཁྱེད་ཀྱི་ལས་གཞི་དེ་དྲ་ལམ་དུ་ཁྱབ་སྤེལ་བྱེད་པར་ཆེད་ལས་ཀྱི་རྣམ་པ་སྟེར་ཐུབ།
-
 བོད་ཡིག་གི་མཐེབ་གཞོང་སྦྱོང་བརྡར་མཉེན་ཆས། (Final Perfect)
 
 藏文键盘打字练习程序 | Tibetan Keyboard Typing Tutor
@@ -81,10 +76,3 @@ bugs, please let us know via the integrated feedback panel.
   - Developed by: [ཁྱེད་ཀྱི་མིང་འདིར་འབྲི། / 您的名字 / Your Name]
   - Font support: Tibetan standard fonts (Microsoft Himalaya, Monlam Uni, etc.)
   - Backgrounds: Custom Day/Night landscape wallpapers.
-
-💡 ལམ་སྟོན། (GitHub Repository སྒྲིག་སྟངས།)
-
-1.  Repository Name: Tibetan-Typing-Tutor
-2.  Description: བོད་ཡིག་གི་མཐེབ་གཞོང་སྦྱོང་བརྡར་མཉེན་ཆས། (Professional Tibetan
-    keyboard typing tutor with interactive hand guides.)
-3.  Topics: tibetan, typing-tutor, javascript, tibetan-language, keyboard

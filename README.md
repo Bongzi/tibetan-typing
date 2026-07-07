@@ -57,7 +57,7 @@ keyboard layout, improving both speed and accuracy through interactive practice.
 🚀 བཀོལ་སྤྱོད་བྱེད་སྟངས། | 如何使用 | How to Use
 
 1.  Clone the project:
-    git clone https://github.com/your-username/Tibetan-Typing-Tutor.git
+    git clone https://bongzi.github.io/tibetan-typing/
 2.  Open locally: index.html ཡིག་ཆ་དེ་བརྡ་འཕྲིན་འཚོལ་བཤེར་ (Browser)
     ནང་ཁ་ཕྱེ་ནས་བཀོལ་ཆོག (直接在浏览器中打开 index.html
     即可使用。Simply open index.html in any modern browser.)
